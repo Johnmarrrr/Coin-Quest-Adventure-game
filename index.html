@@ -5,96 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Quest Adventure</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="game-container">
-        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <canvas id="gameCanvas" width="1000" height="700"></canvas>
         
         <div id="ui-layer">
-            <button id="pauseBtn" class="btn hidden">Pause</button>
+            <button id="pauseBtn" class="btn hidden">Pause Game</button>
 
             <div id="hud" class="hidden">
-                <div class="hud-item">Score: <span id="scoreDisplay">0</span></div>
-                <div class="hud-item">Level: <span id="levelDisplay">1</span></div>
+                <div class="hud-item">SCORE: <span id="scoreDisplay">0</span></div>
+                <div class="hud-item">LEVEL: <span id="levelDisplay">1</span></div>
             </div>
+            
+            <!-- Main Menu -->
             <div id="start-screen" class="screen">
-                <h1>Coin Quest</h1>
-                <p>Adventure Awaits!</p>
-                <div class="controls-info">
-                    <h3>Instructions</h3>
-                    <p>Move: Arrow Keys or A/D</p>
-                    <p>Jump: Up Arrow, W, or Space</p>
-                    <p><strong>Double Jump:</strong> Press Jump again in mid-air!</p>
-                </div>
-                <button id="startBtn" class="btn">Start Game</button>
+                <h1>COIN QUEST</h1>
+                <button id="startBtn" class="btn">Start Adventure</button>
                 <button id="levelSelectBtn" class="btn btn-secondary">Level Selection</button>
+                <button id="instructionsBtn" class="btn btn-secondary">Instructions</button>
             </div>
 
-            <div id="level-select-screen" class="screen hidden">
-                <h1>Level Select</h1>
-                <div id="levels-grid" class="level-grid">
-                    <!-- Levels will be injected here by JS -->
-                </div>
-                <button id="backToMenuBtn" class="btn btn-secondary">Back to Menu</button>
-            </div>
-                <button id="levelSelectBtn" class="btn btn-secondary">Level Selection</button>
-            </div>
-
-            <div id="level-select-screen" class="screen hidden">
-                <h1>Level Select</h1>
-                <div id="levels-grid" class="level-grid">
-                    <!-- Levels will be injected here by JS -->
-                </div>
-                <button id="backToMenuBtn" class="btn btn-secondary">Back to Menu</button>
-            </div>
-
-            <div id="settings-screen" class="screen hidden">
-                <h2>Paused</h2>
+            <!-- Instructions Screen -->
+            <div id="instructions-screen" class="screen hidden">
+                <h2>Instructions</h2>
                 <div class="instruction-box">
-                    <h3>How to Play</h3>
-                    <p><strong>Goal:</strong> Collect coins and reach the flag!</p>
-                    <p><strong>Controls:</strong> Arrow Keys to move, Space to Jump.</p>
-                    <p><strong>Double Jump:</strong> You can jump a second time while in the air!</p>
-                    <p><strong>Avoid:</strong> Don't touch the spikes or fall off!</p>
-                    <p><strong>Power-ups:</strong></p>
-                    <ul>
-                        <li>Cyan: Speed Boost</li>
-                        <li>Green: Shield (Protection)</li>
-                    </ul>
+                    <p><strong>Goal:</strong> Collect coins and reach the 🚩 flag to advance!</p>
+                    <p><strong>Movement:</strong> Use <strong>Arrow Keys</strong> or <strong>A / D</strong> to move.</p>
+                    <p><strong>Jumping:</strong> Press <strong>Up / W / Space</strong> to jump.</p>
+                    <p><strong>Double Jump:</strong> Press jump again while in the air!</p>
+                    <p><strong>Hazards:</strong> Avoid spikes and falling off the screen.</p>
+                    <p><strong>Power-ups:</strong> 
+                        <span style="color: #00FFFF;">Cyan</span> = Speed, 
+                        <span style="color: #ADFF2F;">Green</span> = Shield.
+                    </p>
                 </div>
-                <button id="resumeBtn" class="btn">Resume Game</button>
-                <button id="restartLevelBtn" class="btn">Restart Level</button>
-                <button id="quitGameBtn" class="btn">Quit to Main Menu</button>
+                <button id="backFromInstructionsBtn" class="btn btn-secondary">Back to Menu</button>
             </div>
 
+            <!-- Level Select Screen -->
+            <div id="level-select-screen" class="screen hidden">
+                <h2>Select Level</h2>
+                <div id="levels-grid" class="level-grid"></div>
+                <button id="backToMenuBtn" class="btn btn-secondary">Back to Menu</button>
+            </div>
+
+            <!-- Pause Screen -->
+            <div id="settings-screen" class="screen hidden">
+                <h2>Game Paused</h2>
+                <button id="resumeBtn" class="btn">Resume Game</button>
+                <button id="pauseLevelSelectBtn" class="btn btn-secondary">Level Selection</button>
+                <button id="restartLevelBtn" class="btn btn-secondary">Restart Level</button>
+                <button id="quitGameBtn" class="btn btn-secondary">Main Menu</button>
+            </div>
+
+            <!-- Game Over Screen -->
             <div id="game-over-screen" class="screen hidden">
                 <h1>Game Over</h1>
-                <p>Final Score: <span id="finalScoreDisplay">0</span></p>
+                <p>Score: <span id="finalScoreDisplay">0</span></p>
                 <button id="restartBtn" class="btn">Try Again</button>
+                <button id="gameOverMenuBtn" class="btn btn-secondary">Main Menu</button>
             </div>
 
+            <!-- Level Complete Screen -->
             <div id="level-complete-screen" class="screen hidden">
-                <h1>Level Complete!</h1>
-                <p>Great Job!</p>
+                <h2>Level Complete!</h2>
                 <button id="nextLevelBtn" class="btn">Next Level</button>
             </div>
             
+            <!-- Victory Screen -->
             <div id="victory-screen" class="screen hidden">
-                <h1>Victory!</h1>
-                <p>You completed the Quest!</p>
+                <h1 class="victory-title">VICTORY!</h1>
+                <p>You have completed the entire Quest!</p>
                 <p>Final Score: <span id="victoryScoreDisplay">0</span></p>
                 <button id="playAgainBtn" class="btn">Play Again</button>
+                <button id="victoryMenuBtn" class="btn btn-secondary">Main Menu</button>
             </div>
         </div>
         
-        <!-- Mobile Controls -->
         <div id="joystick-container">
             <div id="joystick-knob"></div>
         </div>
         <div id="jump-btn-mobile">JUMP</div>
     </div>
 
-    <!-- Scripts -->
     <script src="src/AudioManager.js"></script>
     <script src="src/LevelData.js"></script>
     <script src="src/Entities.js"></script>

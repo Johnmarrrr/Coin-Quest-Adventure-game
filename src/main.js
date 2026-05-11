@@ -10,7 +10,8 @@ const GameState = {
     LEVEL_SELECT: 3,
     LEVEL_COMPLETE: 4,
     GAME_OVER: 5,
-    VICTORY: 6
+    VICTORY: 6,
+    INSTRUCTIONS: 7
 };
 
 let currentState = GameState.START;
@@ -52,6 +53,7 @@ const uiElements = {
     levelDisplay: document.getElementById('levelDisplay'),
     
     startScreen: document.getElementById('start-screen'),
+    instructionsScreen: document.getElementById('instructions-screen'),
     levelSelectScreen: document.getElementById('level-select-screen'),
     levelsGrid: document.getElementById('levels-grid'),
     settingsScreen: document.getElementById('settings-screen'),
@@ -64,14 +66,19 @@ const uiElements = {
     
     startBtn: document.getElementById('startBtn'),
     levelSelectBtn: document.getElementById('levelSelectBtn'),
+    instructionsBtn: document.getElementById('instructionsBtn'),
+    backFromInstructionsBtn: document.getElementById('backFromInstructionsBtn'),
     backToMenuBtn: document.getElementById('backToMenuBtn'),
     pauseBtn: document.getElementById('pauseBtn'),
     resumeBtn: document.getElementById('resumeBtn'),
+    pauseLevelSelectBtn: document.getElementById('pauseLevelSelectBtn'),
     restartLevelBtn: document.getElementById('restartLevelBtn'),
     quitGameBtn: document.getElementById('quitGameBtn'),
     restartBtn: document.getElementById('restartBtn'),
+    gameOverMenuBtn: document.getElementById('gameOverMenuBtn'),
     nextLevelBtn: document.getElementById('nextLevelBtn'),
     playAgainBtn: document.getElementById('playAgainBtn'),
+    victoryMenuBtn: document.getElementById('victoryMenuBtn'),
 
     joystickContainer: document.getElementById('joystick-container'),
     joystickKnob: document.getElementById('joystick-knob'),
@@ -193,6 +200,9 @@ function switchState(newState) {
         case GameState.START:
             uiElements.startScreen.classList.remove('hidden');
             break;
+        case GameState.INSTRUCTIONS:
+            uiElements.instructionsScreen.classList.remove('hidden');
+            break;
         case GameState.LEVEL_SELECT:
             populateLevelSelect();
             uiElements.levelSelectScreen.classList.remove('hidden');
@@ -231,14 +241,19 @@ function switchState(newState) {
 // Button Listeners
 uiElements.startBtn.addEventListener('click', startGame);
 uiElements.levelSelectBtn.addEventListener('click', () => switchState(GameState.LEVEL_SELECT));
+uiElements.instructionsBtn.addEventListener('click', () => switchState(GameState.INSTRUCTIONS));
+uiElements.backFromInstructionsBtn.addEventListener('click', () => switchState(GameState.START));
 uiElements.backToMenuBtn.addEventListener('click', () => switchState(GameState.START));
 uiElements.pauseBtn.addEventListener('click', () => switchState(GameState.PAUSED));
 uiElements.resumeBtn.addEventListener('click', () => switchState(GameState.PLAYING));
+uiElements.pauseLevelSelectBtn.addEventListener('click', () => switchState(GameState.LEVEL_SELECT));
 uiElements.restartLevelBtn.addEventListener('click', restartGame);
 uiElements.quitGameBtn.addEventListener('click', () => switchState(GameState.START));
 uiElements.restartBtn.addEventListener('click', restartGame);
+uiElements.gameOverMenuBtn.addEventListener('click', () => switchState(GameState.START));
 uiElements.nextLevelBtn.addEventListener('click', loadNextLevel);
 uiElements.playAgainBtn.addEventListener('click', resetGameFull);
+uiElements.victoryMenuBtn.addEventListener('click', () => switchState(GameState.START));
 
 function startGame() {
     score = 0;
